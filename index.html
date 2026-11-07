@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — AI Study App</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9fb;
+        }
+        .container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .lang-switch {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .lang-btn {
+            background: #ede7f6;
+            color: #4527a0;
+            border: 1px solid #d1c4e9;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .lang-btn:hover {
+            background: #d1c4e9;
+        }
+        .lang-btn.active {
+            background: #5e35b1;
+            color: #ffffff;
+            border-color: #5e35b1;
+        }
+        h1 { color: #5e35b1; border-bottom: 2px solid #ede7f6; padding-bottom: 10px; }
+        h2 { color: #4527a0; margin-top: 25px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        .footer { margin-top: 40px; font-size: 0.9em; color: #666; border-top: 1px solid #eee; padding-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Selector de Idiomas -->
+        <div class="lang-switch">
+            <button class="lang-btn active" onclick="switchLang('en')">English</button>
+            <button class="lang-btn" onclick="switchLang('pt')">Português</button>
+            <button class="lang-btn" onclick="switchLang('es')">Español</button>
+        </div>
+
+        <!-- Conteúdo em Inglês (Default) -->
+        <div id="lang-en">
+            <h1>Privacy Policy</h1>
+            <p><strong>Last updated:</strong> November 07, 2026</p>
+            
+            <p>Your privacy is essential to us. This Privacy Policy describes how <strong>AI Study App</strong> collects, uses, stores, and protects your personal information when you use our study, quiz, and Artificial Intelligence essay correction application.</p>
+
+            <h2>1. Information We Collect</h2>
+            <ul>
+                <li><strong>Authentication Data:</strong> Name, email address, and profile picture obtained via Google Sign-In, as well as unique user ID (UID).</li>
+                <li><strong>Essay Content:</strong> Typed text and images captured via camera or gallery for automated optical character recognition (OCR) and grading.</li>
+                <li><strong>Academic History:</strong> Quiz results, study plans, and essay feedback.</li>
+                <li><strong>Device Identifier:</strong> FCM Token used exclusively for delivering native push notifications.</li>
+            </ul>
+
+            <h2>2. How We Use Data</h2>
+            <p>Your data is processed to enable secure login, send content for artificial intelligence analysis (OpenAI API) to generate essay diagnostics, enable social interactions with friends, and personalize your local history.</p>
+
+            <h2>3. Storage and Security</h2>
+            <p>We use cloud services provided by <strong>Google Firebase</strong> (Authentication, Firestore, and Storage) with transport-level encryption (HTTPS/TLS). Progress and history data are also stored locally in the SQLite database on your device.</p>
+
+            <h2>4. Third-Party Data Sharing</h2>
+            <p>We share data exclusively with essential services required for the app's operation:</p>
+            <ul>
+                <li><strong>Google Firebase:</strong> Authentication, cloud database, and file storage.</li>
+                <li><strong>OpenAI API:</strong> OCR transcription and essay analysis.</li>
+                <li><strong>Google Mobile Ads (AdMob):</strong> Displaying advertisements.</li>
+                <li><strong>Google Play Billing:</strong> Subscription management and In-App purchases.</li>
+            </ul>
+
+            <h2>5. Data Deletion and Rights (LGPD / GDPR)</h2>
+            <p>You can request the permanent deletion of your account and all data stored in the cloud and within the app by sending an email to <strong>coffeedevstudio@gmail.com</strong>. Deletion will be completed within 7 business days.</p>
+
+            <h2>6. Contact Us</h2>
+            <p>If you have any questions regarding this privacy policy, please contact us at: <strong>coffeedevstudio@gmail.com</strong></p>
+
+            <div class="footer">
+                <p>&copy; 2026 AI Study App. All rights reserved.</p>
+            </div>
+        </div>
+
+        <!-- Conteúdo em Português -->
+        <div id="lang-pt" style="display: none;">
+            <h1>Política de Privacidade</h1>
+            <p><strong>Última atualização:</strong> 07 de novembro de 2026</p>
+            
+            <p>A sua privacidade é fundamental para nós. Esta Política de Privacidade descreve como o <strong>AI Study App</strong> coleta, usa, armazena e protege as suas informações pessoais ao utilizar nosso aplicativo de estudos, quizzes e correção de redações por Inteligência Artificial.</p>
+
+            <h2>1. Informações que Coletamos</h2>
+            <ul>
+                <li><strong>Dados de Autenticação:</strong> Nome, endereço de e-mail e foto de perfil obtidos via login do Google, além do ID único de usuário (UID).</li>
+                <li><strong>Conteúdo de Redações:</strong> Textos digitados e imagens capturadas via câmera ou galeria para leitura automatizada (OCR) e correção.</li>
+                <li><strong>Histórico Escolar:</strong> Resultados de quizzes, planos de estudo e feedbacks de redação.</li>
+                <li><strong>Identificador do Dispositivo:</strong> Token FCM utilizado exclusivamente para entrega de notificações push nativas.</li>
+            </ul>
+
+            <h2>2. Como Utilizamos os Dados</h2>
+            <p>Seus dados são processados para viabilizar o login seguro, enviar conteúdos para análise de inteligência artificial (OpenAI API) para gerar diagnósticos de redação, permitir interações sociais entre amigos e personalizar o seu histórico local.</p>
+
+            <h2>3. Armazenamento e Segurança</h2>
+            <p>Utilizamos os serviços em nuvem do <strong>Google Firebase</strong> (Authentication, Firestore e Storage) com criptografia de transporte (HTTPS/TLS). Dados de progresso e histórico também são mantidos localmente no banco SQLite do seu dispositivo.</p>
+
+            <h2>4. Compartilhamento com Terceiros</h2>
+            <p>Compartilhamos dados exclusivamente com serviços essenciais para a operação do aplicativo:</p>
+            <ul>
+                <li><strong>Google Firebase:</strong> Autenticação, banco de dados e armazenamento.</li>
+                <li><strong>OpenAI API:</strong> Transcrição OCR e correção de redações.</li>
+                <li><strong>Google Mobile Ads (AdMob):</strong> Exibição de anúncios.</li>
+                <li><strong>Google Play Billing:</strong> Gerenciamento de assinaturas e compras In-App.</li>
+            </ul>
+
+            <h2>5. Exclusão de Dados e Direitos (LGPD)</h2>
+            <p>Você pode solicitar a exclusão permanente da sua conta e de todos os seus dados armazenados na nuvem e no aplicativo enviando um e-mail para <strong>coffeedevstudio@gmail.com</strong>. A exclusão é realizada em até 7 dias úteis.</p>
+
+            <h2>6. Contato</h2>
+            <p>Em caso de dúvidas sobre esta política, entre em contato pelo e-mail: <strong>coffeedevstudio@gmail.com</strong></p>
+
+            <div class="footer">
+                <p>&copy; 2026 AI Study App. Todos os direitos reservados.</p>
+            </div>
+        </div>
+
+        <!-- Conteúdo em Espanhol -->
+        <div id="lang-es" style="display: none;">
+            <h1>Política de Privacidad</h1>
+            <p><strong>Última actualización:</strong> 07 de noviembre de 2026</p>
+            
+            <p>Su privacidad es esencial para nosotros. Esta Política de Privacidad describe cómo <strong>AI Study App</strong> recopila, utiliza, almacena y protege su información personal al utilizar nuestra aplicación de estudio, cuestionarios y corrección de ensayos mediante Inteligencia Artificial.</p>
+
+            <h2>1. Información que Recopilamos</h2>
+            <ul>
+                <li><strong>Datos de Autenticación:</strong> Nombre, dirección de correo electrónico y foto de perfil obtenidos a través del inicio de sesión con Google, así como la ID única de usuario (UID).</li>
+                <li><strong>Contenido de Ensayos:</strong> Texto escrito e imágenes capturadas mediante cámara o galería para reconocimiento óptico de caracteres (OCR) y corrección automatizada.</li>
+                <li><strong>Historial Académico:</strong> Resultados de cuestionarios, planes de estudio y retroalimentación de ensayos.</li>
+                <li><strong>Identificador del Dispositivo:</strong> Token FCM utilizado exclusivamente para el envío de notificaciones push nativas.</li>
+            </ul>
+
+            <h2>2. Cómo Utilizamos los Datos</h2>
+            <p>Sus datos se procesan para permitir un inicio de sesión seguro, enviar contenido para análisis de inteligencia artificial (OpenAI API) para generar diagnósticos de ensayos, permitir interacciones sociales entre amigos y personalizar su historial local.</p>
+
+            <h2>3. Almacenamiento y Seguridad</h2>
+            <p>Utilizamos servicios en la nube de <strong>Google Firebase</strong> (Authentication, Firestore y Storage) con cifrado de transporte (HTTPS/TLS). Los datos de progreso e historial también se almacenan localmente en la base de datos SQLite de su dispositivo.</p>
+
+            <h2>4. Compartición de Datos con Terceros</h2>
+            <p>Compartimos datos exclusivamente con servicios esenciales para la operación de la aplicación:</p>
+            <ul>
+                <li><strong>Google Firebase:</strong> Autenticación, base de datos en la nube y almacenamiento.</li>
+                <li><strong>OpenAI API:</strong> Transcripción OCR y corrección de ensayos.</li>
+                <li><strong>Google Mobile Ads (AdMob):</strong> Visualización de anuncios.</li>
+                <li><strong>Google Play Billing:</strong> Gestión de suscripciones y compras dentro de la aplicación.</li>
+            </ul>
+
+            <h2>5. Eliminación de Datos y Derechos (LGPD / GDPR)</h2>
+            <p>Puede solicitar la eliminación permanente de su cuenta y de todos sus datos almacenados en la nube y en la aplicación enviando un correo electrónico a <strong>coffeedevstudio@gmail.com</strong>. La eliminación se completará en un plazo de 7 días hábiles.</p>
+
+            <h2>6. Contacto</h2>
+            <p>Si tiene alguna pregunta sobre esta política de privacidad, contáctenos en: <strong>coffeedevstudio@gmail.com</strong></p>
+
+            <div class="footer">
+                <p>&copy; 2026 AI Study App. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchLang(lang) {
+            // Oculta todas as seções
+            document.getElementById('lang-en').style.display = 'none';
+            document.getElementById('lang-pt').style.display = 'none';
+            document.getElementById('lang-es').style.display = 'none';
+
+            // Remove a classe ativa dos botões
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Mostra a seção selecionada e ativa o botão correspondente
+            if (lang === 'en') {
+                document.getElementById('lang-en').style.display = 'block';
+                buttons[0].classList.add('active');
+                document.documentElement.lang = 'en';
+            } else if (lang === 'pt') {
+                document.getElementById('lang-pt').style.display = 'block';
+                buttons[1].classList.add('active');
+                document.documentElement.lang = 'pt-BR';
+            } else if (lang === 'es') {
+                document.getElementById('lang-es').style.display = 'block';
+                buttons[2].classList.add('active');
+                document.documentElement.lang = 'es';
+            }
+        }
+    </script>
+</body>
+</html>
