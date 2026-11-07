@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exclusão de Conta — AI Study App</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f9f9fb; padding: 20px; }
+        .card { max-width: 500px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h1 { color: #d32f2f; font-size: 1.5em; }
+        p { color: #555; font-size: 0.95em; line-height: 1.5; }
+        input[type="email"] { width: 100%; padding: 12px; margin: 15px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; background: #d32f2f; color: #fff; border: none; padding: 12px; border-radius: 6px; font-size: 1em; font-weight: bold; cursor: pointer; }
+        button:hover { background: #b71c1c; }
+        .notice { background: #fff3e0; color: #e65100; padding: 12px; border-radius: 6px; font-size: 0.85em; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Solicitar Exclusão de Conta</h1>
+        <p>Ao solicitar a exclusão, todos os seus dados (histórico de quizzes, redações, fotos de perfil e conquistas) serão agendados para <strong>remoção permanente em 7 dias</strong>.</p>
+        
+        <form id="delete-form">
+            <label for="email"><strong>Digite o e-mail cadastrado no app:</strong></label>
+            <input type="email" id="email" required placeholder="seuemail@gmail.com">
+            <button type="submit">Enviar Link de Confirmação</button>
+        </form>
+
+        <div class="notice">
+            📌 <strong>Como funciona:</strong> Enviaremos um e-mail de verificação. Sua conta só será agendada para exclusão após você clicar no link enviado. Se fizer login no aplicativo dentro dos 7 dias, o agendamento será cancelado automaticamente.
+        </div>
+    </div>
+
+    <!-- Firebase SDK (Version 9+) -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+      import { getAuth, sendSignInLinkToEmail } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+      // Cole aqui as configurações do seu projeto Firebase Console
+      const firebaseConfig = {
+        apiKey: "AIzaSyD9eTiMUB-5q_TAGNzF0eoPtZCA21txcCM",
+        authDomain: "ai-study-app-abec8.firebaseapp.com",
+        projectId: "ai-study-app-abec8",
+        storageBucket: "ai-study-app-abec8.firebasestorage.app",
+        messagingSenderId: "521923125430",
+        appId: "1:521923125430:web:e7936b87645a2300c7c617",
+      }
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      document.getElementById('delete-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+
+        const actionCodeSettings = {
+          url: 'https://marcus-viniciusdev.github.io/ai-study-app-privacy-policy/confirm-deletion.html',
+          handleCodeInApp: true,
+        };
+
+        try {
+          await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+          window.localStorage.setItem('emailForSignIn', email);
+          alert('E-mail de confirmação enviado! Verifique sua caixa de entrada para prosseguir.');
+        } catch (error) {
+          alert('Erro ao enviar e-mail: ' + error.message);
+        }
+      });
+    </script>
+</body>
+</html>
