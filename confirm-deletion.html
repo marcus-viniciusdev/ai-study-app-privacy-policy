@@ -1,18 +1,27 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Confirmar Exclusão — AI Study App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Deletion Scheduled — AI Study App</title>
     <style>
-        body { font-family: sans-serif; background: #f9f9fb; padding: 20px; text-align: center; }
-        .card { max-width: 500px; margin: 50px auto; background: #fff; padding: 30px; border-radius: 12px; }
-        .success { color: #2e7d32; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f9f9fb; padding: 20px; color: #333; }
+        .card { max-width: 500px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; }
+        h1 { color: #dc2626; font-size: 1.5em; margin-top: 0; }
+        p { color: #555; font-size: 0.95em; line-height: 1.5; }
+        .success-box { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: 15px; border-radius: 8px; margin-top: 20px; }
     </style>
 </head>
 <body>
     <div class="card">
-        <h2 id="status-title">Processando confirmação...</h2>
-        <p id="status-desc">Aguarde enquanto validamos sua solicitação.</p>
+        <h1>Account Deletion Confirmed</h1>
+        <div class="success-box">
+            <p>Your request has been successfully recorded.</p>
+            <p>Your account and all associated data will be permanently deleted in <strong>7 days</strong>.</p>
+        </div>
+        <p style="margin-top: 20px; font-size: 0.85em; color: #777;">
+            If you change your mind, simply log in back to the AI Study App within 7 days to automatically cancel this request.
+        </p>
     </div>
 
     <script type="module">
@@ -21,13 +30,14 @@
       import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
       const firebaseConfig = {
-        apiKey: "AIzaSyD9eTiMUB-5q_TAGNzF0eoPtZCA21txcCM",
+        apiKey: "AIzaSyD-n0-VWPJXv2TwjztHuzelHBMk93uGchE",
         authDomain: "ai-study-app-abec8.firebaseapp.com",
         projectId: "ai-study-app-abec8",
         storageBucket: "ai-study-app-abec8.firebasestorage.app",
         messagingSenderId: "521923125430",
-        appId: "1:521923125430:web:e7936b87645a2300c7c617",
-      }
+        appId: "1:521923125430:web:e7936b87645a2300c7c617"
+      };
+
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getFirestore(app);
@@ -35,18 +45,16 @@
       if (isSignInWithEmailLink(auth, window.location.href)) {
         let email = window.localStorage.getItem('emailForSignIn');
         if (!email) {
-          email = window.prompt('Por favor, confirme seu e-mail para finalizar:');
+          email = window.prompt('Please confirm your email address:');
         }
 
         signInWithEmailLink(auth, email, window.location.href)
           .then(async (result) => {
             const user = result.user;
-            
-            // Calcula a data de exclusão para 7 dias no futuro
             const deletionDate = new Date();
             deletionDate.setDate(deletionDate.getDate() + 7);
 
-            // Grava a solicitação no Firestore
+            // Grava a solicitação no Firestore com status pending
             await setDoc(doc(db, "deletion_requests", user.uid), {
               uid: user.uid,
               email: user.email,
@@ -54,14 +62,9 @@
               scheduledFor: deletionDate,
               status: "pending"
             });
-
-            document.getElementById('status-title').className = "success";
-            document.getElementById('status-title').innerText = "Exclusão Agendada com Sucesso!";
-            document.getElementById('status-desc').innerHTML = `Sua conta e todos os dados vinculados serão excluídos permanentemente em <strong>${deletionDate.toLocaleDateString('pt-BR')}</strong>.<br><br>Se você mudar de ideia, basta fazer login novamente no aplicativo antes desta data para cancelar automaticamente a exclusão.`;
           })
           .catch((error) => {
-            document.getElementById('status-title').innerText = "Erro na validação";
-            document.getElementById('status-desc').innerText = error.message;
+            console.error("Error confirming deletion:", error);
           });
       }
     </script>
