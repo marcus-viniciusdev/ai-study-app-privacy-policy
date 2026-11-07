@@ -89,23 +89,22 @@
         e.preventDefault();
         const email = document.getElementById(`email-${lang}`).value;
 
-        const actionCodeSettings = {
-          url: 'https://marcus-viniciusdev.github.io/ai-study-app-privacy-policy/confirm-deletion.html',
-          handleCodeInApp: true,
-        };
-
         try {
-          await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-          window.localStorage.setItem('emailForSignIn', email);
-          
-          const msgs = {
+            // Cria um pedido pendente de verificação
+            await addDoc(collection(db, "pending_deletion_requests"), {
+            email: email,
+            lang: lang,
+            createdAt: serverTimestamp()
+            });
+
+            const msgs = {
             en: 'Confirmation email sent! Please check your inbox to proceed.',
             pt: 'E-mail de confirmação enviado! Verifique sua caixa de entrada para prosseguir.',
             es: '¡Correo de confirmación enviado! Por favor revise su bandeja de entrada.'
-          };
-          alert(msgs[lang]);
+            };
+            alert(msgs[lang]);
         } catch (error) {
-          alert('Error: ' + error.message);
+            alert('Error: ' + error.message);
         }
       };
 
