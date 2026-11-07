@@ -20,7 +20,14 @@
       import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
       import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-      const firebaseConfig = { /* Suas credenciais do Firebase */ };
+      const firebaseConfig = {
+        apiKey: "AIzaSyD9eTiMUB-5q_TAGNzF0eoPtZCA21txcCM",
+        authDomain: "ai-study-app-abec8.firebaseapp.com",
+        projectId: "ai-study-app-abec8",
+        storageBucket: "ai-study-app-abec8.firebasestorage.app",
+        messagingSenderId: "521923125430",
+        appId: "1:521923125430:web:e7936b87645a2300c7c617",
+      }
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getFirestore(app);
