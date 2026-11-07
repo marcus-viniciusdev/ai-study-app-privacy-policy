@@ -10,18 +10,32 @@
         h1 { color: #dc2626; font-size: 1.5em; margin-top: 0; }
         p { color: #555; font-size: 0.95em; line-height: 1.5; }
         .success-box { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; padding: 15px; border-radius: 8px; margin-top: 20px; }
+        .error-box { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; padding: 15px; border-radius: 8px; margin-top: 20px; display: none; }
+        .loading { color: #dc2626; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>Account Deletion Confirmed</h1>
-        <div class="success-box">
-            <p>Your request has been successfully recorded.</p>
-            <p>Your account and all associated data will be permanently deleted in <strong>7 days</strong>.</p>
+        <div id="loading-state">
+            <h1 class="loading">Processing request...</h1>
+            <p>Please wait while we confirm your account deletion request.</p>
         </div>
-        <p style="margin-top: 20px; font-size: 0.85em; color: #777;">
-            If you change your mind, simply log in back to the AI Study App within 7 days to automatically cancel this request.
-        </p>
+
+        <div id="success-state" style="display: none;">
+            <h1>Account Deletion Confirmed</h1>
+            <div class="success-box">
+                <p>Your request has been successfully recorded.</p>
+                <p>Your account and all associated data will be permanently deleted in <strong>7 days</strong>.</p>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.85em; color: #777;">
+                If you change your mind, simply log back into the AI Study App within 7 days to automatically cancel this request.
+            </p>
+        </div>
+
+        <div id="error-state" class="error-box">
+            <h3 style="margin-top: 0;">Verification Failed</h3>
+            <p id="error-message">The confirmation link is invalid or has expired. Please try requesting a new link.</p>
+        </div>
     </div>
 
     <script type="module">
@@ -43,29 +57,42 @@
       const db = getFirestore(app);
 
       if (isSignInWithEmailLink(auth, window.location.href)) {
-        let email = window.localStorage.getItem('emailForSignIn');
+        let email = window.localStorage.setItem ? window.localStorage.getItem('emailForSignIn') : null;
         if (!email) {
           email = window.prompt('Please confirm your email address:');
         }
 
-        signInWithEmailLink(auth, email, window.location.href)
-          .then(async (result) => {
-            const user = result.user;
-            const deletionDate = new Date();
-            deletionDate.setDate(deletionDate.getDate() + 7);
+        if (email) {
+          signInWithEmailLink(auth, email, window.location.href)
+            .then(async (result) => {
+              const user = result.user;
+              const deletionDate = new Date();
+              deletionDate.setDate(deletionDate.getDate() + 7);
 
-            // Grava a solicitação no Firestore com status pending
-            await setDoc(doc(db, "deletion_requests", user.uid), {
-              uid: user.uid,
-              email: user.email,
-              requestedAt: serverTimestamp(),
-              scheduledFor: deletionDate,
-              status: "pending"
+              await setDoc(doc(db, "deletion_requests", user.uid), {
+                uid: user.uid,
+                email: user.email,
+                requestedAt: serverTimestamp(),
+                scheduledFor: deletionDate,
+                status: "pending"
+              });
+
+              document.getElementById('loading-state').style.display = 'none';
+              document.getElementById('success-state').style.display = 'block';
+            })
+            .catch((error) => {
+              console.error("Error confirming deletion:", error);
+              document.getElementById('loading-state').style.display = 'none';
+              document.getElementById('error-message').innerText = error.message;
+              document.getElementById('error-state').style.display = 'block';
             });
-          })
-          .catch((error) => {
-            console.error("Error confirming deletion:", error);
-          });
+        } else {
+          document.getElementById('loading-state').style.display = 'none';
+          document.getElementById('error-state').style.display = 'block';
+        }
+      } else {
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('error-state').style.display = 'block';
       }
     </script>
 </body>
