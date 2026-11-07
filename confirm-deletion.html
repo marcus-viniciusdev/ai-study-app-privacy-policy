@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmar Exclusão — AI Study App</title>
+    <style>
+        body { font-family: sans-serif; background: #f9f9fb; padding: 20px; text-align: center; }
+        .card { max-width: 500px; margin: 50px auto; background: #fff; padding: 30px; border-radius: 12px; }
+        .success { color: #2e7d32; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2 id="status-title">Processando confirmação...</h2>
+        <p id="status-desc">Aguarde enquanto validamos sua solicitação.</p>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+      import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+      import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+      const firebaseConfig = { /* Suas credenciais do Firebase */ };
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      if (isSignInWithEmailLink(auth, window.location.href)) {
+        let email = window.localStorage.getItem('emailForSignIn');
+        if (!email) {
+          email = window.prompt('Por favor, confirme seu e-mail para finalizar:');
+        }
+
+        signInWithEmailLink(auth, email, window.location.href)
+          .then(async (result) => {
+            const user = result.user;
+            
+            // Calcula a data de exclusão para 7 dias no futuro
+            const deletionDate = new Date();
+            deletionDate.setDate(deletionDate.getDate() + 7);
+
+            // Grava a solicitação no Firestore
+            await setDoc(doc(db, "deletion_requests", user.uid), {
+              uid: user.uid,
+              email: user.email,
+              requestedAt: serverTimestamp(),
+              scheduledFor: deletionDate,
+              status: "pending"
+            });
+
+            document.getElementById('status-title').className = "success";
+            document.getElementById('status-title').innerText = "Exclusão Agendada com Sucesso!";
+            document.getElementById('status-desc').innerHTML = `Sua conta e todos os dados vinculados serão excluídos permanentemente em <strong>${deletionDate.toLocaleDateString('pt-BR')}</strong>.<br><br>Se você mudar de ideia, basta fazer login novamente no aplicativo antes desta data para cancelar automaticamente a exclusão.`;
+          })
+          .catch((error) => {
+            document.getElementById('status-title').innerText = "Erro na validação";
+            document.getElementById('status-desc').innerText = error.message;
+          });
+      }
+    </script>
+</body>
+</html>
